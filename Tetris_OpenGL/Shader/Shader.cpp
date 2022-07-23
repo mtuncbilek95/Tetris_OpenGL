@@ -61,11 +61,12 @@ std::string ShaderProgram::CatchFile(const std::string FileName)
 
 	if (File.is_open())
 	{
-		char ReadData{};
-		while ((ReadData == File.get()) != EOF)
+		char ReadData;
+		while ((ReadData = File.get()) != EOF)
 		{
 			Data += ReadData;
 		}
+		File.close();
 	}
 
 	return Data;

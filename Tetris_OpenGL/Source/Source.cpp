@@ -83,6 +83,7 @@ int main(int argumentCount, char** argumentValue)
 		printf("GLAD initialization has failed!");
 		return 1;
 	}
+	glfwSwapInterval(1 / 60);
 
 	//Declaring the Rendering Viewport to GLFW.
 	glfwSetFramebufferSizeCallback(MainWindow, FrameBufferSize);
@@ -105,21 +106,27 @@ int main(int argumentCount, char** argumentValue)
 		//Input function
 		ProcessInput(MainWindow);
 
+		/*
+		* Always refresh screen first, then use shader in order to see the result.
+		*/
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		//Use Program and bind Vertex Array Object.
 		MainProgram.UseProgram();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		//Rendering functions
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		/*
+		* GL_FILL makes the Polygon Mode Normal but GL_LINE makes it wire.
+		*/
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
+		
 		//Continuously draw images and check for all inputs.
 		glfwSwapBuffers(MainWindow);
 		glfwPollEvents();
 	}
-
 	glfwTerminate();
 
 	return 0;
