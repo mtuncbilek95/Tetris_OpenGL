@@ -38,7 +38,7 @@ void CreateBuffer()
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 	glEnableVertexAttribArray(0);
 }
 #pragma endregion
@@ -83,37 +83,37 @@ int main(int argumentCount, char** argumentValue)
 		printf("GLAD initialization has failed!");
 		return 1;
 	}
-	glfwSwapInterval(1 / 60);
 
 	//Declaring the Rendering Viewport to GLFW.
 	glfwSetFramebufferSizeCallback(MainWindow, FrameBufferSize);
 
 	//Initialize Shader.
-	ShaderProgram MainProgram;
+	ShaderProgram* MainProgram = new ShaderProgram();
 
 	//Attach Vertex and Fragment Shader.
-	MainProgram.AttachShader("./GLSL/VertexShader.glsl", GL_VERTEX_SHADER);
-	MainProgram.AttachShader("./GLSL/FragmentShader.glsl", GL_FRAGMENT_SHADER);
+	MainProgram->AttachShader("./GLSL/VertexShader.glsl", GL_VERTEX_SHADER);
+	MainProgram->AttachShader("./GLSL/FragmentShader.glsl", GL_FRAGMENT_SHADER);
 
 	//Link Shader.
-	MainProgram.LinkShader();
+	MainProgram->LinkShader();
 
 	//Create shader buffers.
 	CreateBuffer();
 
 	while (!glfwWindowShouldClose(MainWindow))
 	{
+		/*
+		* First process input, secondly refresh screen, then use shader in order to see the result.
+		*/
+
 		//Input function
 		ProcessInput(MainWindow);
 
-		/*
-		* Always refresh screen first, then use shader in order to see the result.
-		*/
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Use Program and bind Vertex Array Object.
-		MainProgram.UseProgram();
+		MainProgram->UseProgram();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -122,13 +122,14 @@ int main(int argumentCount, char** argumentValue)
 		*/
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		
 		//Continuously draw images and check for all inputs.
 		glfwSwapBuffers(MainWindow);
 		glfwPollEvents();
 	}
-	glfwTerminate();
 
+	delete MainProgram;
+	glfwTerminate();
+	
 	return 0;
 }
 
