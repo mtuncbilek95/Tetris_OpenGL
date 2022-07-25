@@ -83,7 +83,8 @@ int main(int argumentCount, char** argumentValue)
 		printf("GLAD initialization has failed!");
 		return 1;
 	}
-	glfwSwapInterval(1 / 60);
+
+	glfwSwapInterval(1);
 
 	//Declaring the Rendering Viewport to GLFW.
 	glfwSetFramebufferSizeCallback(MainWindow, FrameBufferSize);
@@ -122,7 +123,6 @@ int main(int argumentCount, char** argumentValue)
 		*/
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		
 		//Continuously draw images and check for all inputs.
 		glfwSwapBuffers(MainWindow);
 		glfwPollEvents();
