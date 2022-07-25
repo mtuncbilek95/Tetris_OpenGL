@@ -8,6 +8,7 @@ ShaderProgram::ShaderProgram()
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(ProgramId);
+	printf("FUCK");
 }
 
 void ShaderProgram::AttachShader(const char* FileName, unsigned int ShaderType)
@@ -20,7 +21,7 @@ void ShaderProgram::AttachShader(const char* FileName, unsigned int ShaderType)
 	glShaderSource(ShaderId, 1, &CharSource, NULL);
 
 	int isCompiled;
-	char log[1024];
+	char log[512];
 
 	glCompileShader(ShaderId);
 	glGetShaderiv(ShaderId, GL_COMPILE_STATUS, &isCompiled);
@@ -37,7 +38,7 @@ void ShaderProgram::AttachShader(const char* FileName, unsigned int ShaderType)
 void ShaderProgram::LinkShader()
 {
 	int isLinked;
-	char log[1024];
+	char log[512];
 
 	glLinkProgram(ProgramId);
 	glGetShaderiv(ProgramId, GL_LINK_STATUS, &isLinked);

@@ -17,6 +17,9 @@ public:
 	*	This function is used to attach the shader program on main.
 	*/
 	void AttachShader(const char* FileName, unsigned int ShaderType);
+	/**
+	*	This function is used to link the shader program on main.
+	*/
 	void LinkShader();
 	void UseProgram();
 
