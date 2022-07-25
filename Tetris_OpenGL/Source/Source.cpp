@@ -107,7 +107,6 @@ int main(int argumentCount, char** argumentValue)
 		/*
 		* First process input, secondly refresh screen, then use shader in order to see the result.
 		*/
-		vertices.
 
 		//Input function
 		ProcessInput(MainWindow);
