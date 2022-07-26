@@ -38,8 +38,10 @@ void CreateBuffer()
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float) * 3));
+	glEnableVertexAttribArray(1);
 }
 #pragma endregion
 
@@ -90,14 +92,14 @@ int main(int argumentCount, char** argumentValue)
 	glfwSetFramebufferSizeCallback(MainWindow, FrameBufferSize);
 
 	//Initialize Shader.
-	ShaderProgram* MainProgram = new ShaderProgram();
+	ShaderProgram MainProgram;
 
 	//Attach Vertex and Fragment Shader.
-	MainProgram->AttachShader("./GLSL/VertexShader.glsl", GL_VERTEX_SHADER);
-	MainProgram->AttachShader("./GLSL/FragmentShader.glsl", GL_FRAGMENT_SHADER);
+	MainProgram.AttachShader("./GLSL/VertexShader.glsl", GL_VERTEX_SHADER);
+	MainProgram.AttachShader("./GLSL/FragmentShader.glsl", GL_FRAGMENT_SHADER);
 
 	//Link Shader.
-	MainProgram->LinkShader();
+	MainProgram.LinkShader();
 
 	//Create shader buffers.
 	CreateBuffer();
@@ -114,15 +116,10 @@ int main(int argumentCount, char** argumentValue)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//Deneme tahtasý
-		float Timer = glfwGetTime();
-		float GreenColor = (sin(Timer) / 2.0f) + 0.5f;
-
 		//Use Program and bind Vertex Array Object.
-		MainProgram->UseProgram();
-		MainProgram->Uniform(GreenColor);
+		MainProgram.UseProgram();
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		/*
 		* GL_FILL makes the Polygon Mode Normal but GL_LINE makes it wire.
@@ -134,7 +131,7 @@ int main(int argumentCount, char** argumentValue)
 		glfwPollEvents();
 	}
 
-	delete MainProgram;
+	//delete MainProgram;
 	glfwTerminate();
 	
 	return 0;

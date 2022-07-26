@@ -34,7 +34,4 @@
     <None Include="GLSL\VertexShader.glsl" />
     <None Include="GLSL\FragmentShader.glsl" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Notes\OpenGL Notes.txt" />
-  </ItemGroup>
 </Project>

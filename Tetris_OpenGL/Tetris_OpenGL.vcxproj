@@ -150,9 +150,6 @@
     <None Include="GLSL\FragmentShader.glsl" />
     <None Include="GLSL\VertexShader.glsl" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Notes\OpenGL Notes.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
