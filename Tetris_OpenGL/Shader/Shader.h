@@ -23,6 +23,9 @@ public:
 	void LinkShader();
 	void UseProgram();
 
+	int GetLocation();
+
+	void Uniform(float Color);
 private:
 
 	//	This function is used to convert file location into string properly.
